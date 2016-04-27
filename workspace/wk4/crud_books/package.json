@@ -1,0 +1,16 @@
+{
+  "name": "crud_books",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "knex": "knex"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "knex": "^0.10.0",
+    "pg": "^4.5.4"
+  }
+}

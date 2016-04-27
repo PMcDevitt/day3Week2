@@ -1,0 +1,96 @@
+protractor -g
+webdriver-manager update
+
+protractor test/conf.js///////
+exports.config = {
+  specs: ['acceptance/*.js'],
+  framework: 'mocha',
+  mochaOpts: {
+    reporter: 'spec',
+    slow: 3000,
+    enableTimeouts: false
+  },
+  capabilities: {
+    'browserName': 'chrome'
+  },
+  directConnect: true
+}
+
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript' src='/node_modules/react/dist/react.js')
+    script(type='text/javascript' src='/node_modules/react-dom/dist/react-dom.js')
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.js')
+    script(type='text/babel' src='/javascripts/hotels.jsx')
+  body
+    block content
+
+
+ps aux | grep sql
+kill -9 <pid>
+
+/////// installing the database that is a standalone application
+brew install postgresql
+brew list
+// install db locally for app
+initdb -D ./data
+// start db
+pg_ctl -D ./data -l logfile start
+ps aux | grep sql
+
+//create schema
+createdb crud_books_development
+createdb crud_books_test
+
+// new command line tool for data base
+psql crud_books_development
+
+\l   // list databases
+\dt  // describe tables
+\q   // quit the db psql command line
+
+?? application
+npm init
+
+/// KNEX
+npm install --save pg knex
+npm run knex init
+
+  -- makes the migration file
+npm run knex migrate:make create_books
+
+  -- runs the latest  migration
+knex migrate:latest
+knex migrate:latest --env test
+
+  -- migrationfile sample
+exports.up = function(knex, Promise) {
+  return knex.schema.createTable('books', function(table){
+    table.increments() // Primary id column that auto increments
+    table.string('title')
+    table.string('author')
+  })
+}
+
+exports.down = function(knex, Promise) {
+  return knex.schema.dropTable('books')
+}
+
+
+touch config/database.js
+var knexFile = require('../knexfile')
+var knex = require('knex')(knexFile[process.env.NODE_ENV || 'development'])
+var bookshelf = require('bookshelf')(knex)
+
+module.exports = bookshelf
+
+
+
+
+
+
+
+
